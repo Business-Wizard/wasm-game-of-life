@@ -1,0 +1,44 @@
+default_stages: [commit, push, manual, prepare-commit-msg, commit-msg, post-merge, post-rewrite]
+default_install_hook_types: [pre-commit, commit-msg, pre-push, post-rewrite, post-merge]
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: check-yaml
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: pretty-format-json
+        args: [--autofix]
+      - id: sort-simple-yaml
+      - id: trailing-whitespace
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: v1.0
+    hooks:
+      - id: fmt
+        args: ['--all']
+        language: system
+        pass_filenames: false
+      - id: cargo-check
+        args: ['--all-features', '--all-targets', '--workspace', '--']
+        language: system
+      - id: clippy
+        name: clippy_fix
+        args: ['--fix', '--all-features', '--allow-staged', '--allow-dirty']
+        language: system
+      - id: clippy
+        name: clippy_lint
+        args: ['--all-targets', '--all-features', '--', '-D', 'warnings', '-A', 'clippy::all']
+        language: system
