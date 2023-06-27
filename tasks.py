@@ -16,12 +16,20 @@ WWW_DIR: Path = ROOT / 'www'
 def build_all(context: context.Context) -> None:
     context.run(command='wasm-pack build')
     context.run(command='npm init wasm-app www')
+    with context.cd(path=WWW_DIR):
+        context.run(command='npm install')
+
+
+@invoke.task
+def build_site(context: context.Context) -> None:
+    with context.cd(path=WWW_DIR):
+        context.run(command='npm install')
 
 
 @invoke.task
 def build(context: context.Context) -> None:
-    with context.cd(path=WWW_DIR):
-        context.run(command='npm install')
+    with context.cd(path=ROOT):
+        context.run(command='wasm-pack build')
 
 
 @invoke.task
