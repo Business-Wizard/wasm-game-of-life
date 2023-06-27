@@ -1,11 +1,22 @@
-default_stages: [commit, push, manual, prepare-commit-msg, commit-msg, post-merge, post-rewrite]
-default_install_hook_types: [pre-commit, commit-msg, pre-push, post-rewrite, post-merge]
+default_stages:
+  [
+    commit,
+    push,
+    manual,
+    prepare-commit-msg,
+    commit-msg,
+    post-merge,
+    post-rewrite,
+  ]
+default_install_hook_types:
+  [pre-commit, commit-msg, pre-push, post-rewrite, post-merge]
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
       - id: check-added-large-files
+        args: [--maxkb=800]
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-json
@@ -28,17 +39,26 @@ repos:
     rev: v1.0
     hooks:
       - id: fmt
-        args: ['--all']
+        args: ["--all"]
         language: system
         pass_filenames: false
       - id: cargo-check
-        args: ['--all-features', '--all-targets', '--workspace', '--']
+        args: ["--all-features", "--all-targets", "--workspace", "--"]
         language: system
       - id: clippy
         name: clippy_fix
-        args: ['--fix', '--all-features', '--allow-staged', '--allow-dirty']
+        args: ["--fix", "--all-features", "--allow-staged", "--allow-dirty"]
         language: system
       - id: clippy
         name: clippy_lint
-        args: ['--all-targets', '--all-features', '--', '-D', 'warnings', '-A', 'clippy::all']
+        args:
+          [
+            "--all-targets",
+            "--all-features",
+            "--",
+            "-D",
+            "warnings",
+            "-A",
+            "clippy::all",
+          ]
         language: system
