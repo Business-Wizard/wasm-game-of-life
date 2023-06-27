@@ -15,11 +15,5 @@ extern "C" {
 
 #[wasm_bindgen]
 pub fn greet(name: &str) {
-    alert(
-        format!(
-            "Hello, {}! Welcome to the world of Rust and WebAssembly!",
-            name
-        )
-        .as_str(),
-    );
+    alert(format!("Hello, {}!", name).as_str());
 }
